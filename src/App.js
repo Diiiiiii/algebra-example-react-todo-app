@@ -5,7 +5,7 @@ import { Task } from "./containers/Task";
 import { AppContext } from "./contexts/AppContext";
 
 export function App() {
-  const appContext = useContext(AppContext);
+  const appContext = useContext(AppContext); 
 
   return (
     <div>
