@@ -8,8 +8,11 @@ export function AppProvider(props) {
   const [tasks, setTasks] = useState([]);
 
   const logIn = (data) => setUser({ username: data.username });
-  const logOut = () => setUser(null);
-  const isLoggedIn = () => user !== null;
+  const logOut = () => {
+    setTasks([]);
+    setUser(null);
+  };
+  const isLoggedIn = useCallback(() => user !== null, [user]);
 
   const addTask = (data) =>
     setTasks((state) => [
@@ -42,6 +45,27 @@ export function AppProvider(props) {
     checkTask,
     deleteTask,
   };
+
+  useEffect(() => {
+    if (
+      isLoggedIn() &&
+      localStorage.getItem("note-app-" + user.username) !== null
+    ) {
+      const storedTasks = JSON.parse(
+        localStorage.getItem("note-app-" + user.username),
+      );
+      setTasks(storedTasks);
+    }
+  }, [isLoggedIn, user]);
+
+  useEffect(() => {
+    if (isLoggedIn()) {
+      localStorage.setItem(
+        "note-app-" + user.username,
+        JSON.stringify(tasks),
+      );
+    }
+  }, [isLoggedIn, user, tasks]);
 
   return (
     <AppContext.Provider value={value}>
