@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
 import { LoginForm as Component } from "../components/LoginForm";
-import { AppContext } from "../contexts/AppContext";
+import { ReduxAppContext } from "../contexts/ReduxAppContext";
 
 export function LoginForm() {
-  const appContext = useContext(AppContext);
+  const appContext = useContext(ReduxAppContext);
   const [state, setState] = useState({});
 
   const handleChange = (event) => {
@@ -18,7 +18,7 @@ export function LoginForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    AppContext.logIn(state);
+    appContext.logIn(state);
   };
 
   return <Component onSubmit={handleSubmit} onChange={handleChange} />;
