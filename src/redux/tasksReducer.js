@@ -29,6 +29,7 @@ const initialState = {
   }
   
   export function reducer(state = initialState, action) {
+    console.log(state, action);
     if (action.type === "ADD_TASK") {
       return handleAddTask(state, action);
     } else if (action.type === "CHECK_TASK") {
